@@ -3,6 +3,7 @@
 import Image from "next/image"
 import { Reveal, LineGrow } from "@/components/animated"
 import { useScrollAnimation } from "@/hooks/use-scroll-animation"
+import { useTranslation } from "@/hooks/use-translation"
 
 const collaborators = [
   { src: "/collaborators/1200x1200bf-60.png", alt: "Collaborator", scale: 1 },
@@ -32,6 +33,7 @@ function LogoCard({ src, alt, scale = 1 }: { src: string; alt: string; scale?: n
 }
 
 export function WorkedWith({ showTitle = false }: { showTitle?: boolean }) {
+  const { t } = useTranslation()
   const { ref, isVisible } = useScrollAnimation({ threshold: 0.1 })
 
   return (
@@ -48,7 +50,7 @@ export function WorkedWith({ showTitle = false }: { showTitle?: boolean }) {
           <div className="text-center mb-6">
             <Reveal>
               <p className="text-xl lg:text-2xl uppercase tracking-[0.3em] text-primary-foreground mb-3">
-                Worked With
+                {t.workedWith.title}
               </p>
             </Reveal>
           </div>

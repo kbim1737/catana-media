@@ -8,14 +8,17 @@ import {
   SectionReveal3D,
   ScrollRotate,
 } from "@/components/animated"
-
-const stats = [
-  { number: 1000, suffix: "+", label: "Videos/Shorts Shot & Directed" },
-  { number: 300, suffix: "M+", label: "Total Views" },
-  { number: 250, suffix: "+", label: "Artists & Clients" },
-]
+import { useTranslation } from "@/hooks/use-translation"
 
 export function AboutSection() {
+  const { t } = useTranslation()
+
+  const stats = [
+    { number: 1000, suffix: "+", label: t.about.statVideos },
+    { number: 300, suffix: "M+", label: t.about.statViews },
+    { number: 250, suffix: "+", label: t.about.statArtists },
+  ]
+
   return (
     <SectionReveal3D origin="left" intensity="dramatic">
       <section id="about" className="py-24 lg:py-32 bg-card overflow-hidden">
@@ -40,36 +43,19 @@ export function AboutSection() {
             <div>
               <Reveal direction="right" delay={0.1}>
                 <p className="text-sm uppercase tracking-[0.3em] text-primary mb-3">
-                  About
+                  {t.about.label}
                 </p>
               </Reveal>
               <Reveal direction="right" delay={0.2}>
                 <h2 className="text-4xl lg:text-5xl font-bold tracking-tighter text-foreground mb-6 text-balance">
-                  Turning Dreams Into a Reality
+                  {t.about.heading}
                 </h2>
               </Reveal>
               <Reveal direction="right" delay={0.3}>
                 <div className="space-y-4 text-muted-foreground leading-relaxed">
-                  <p>
-                    Hey! My name is Christopher Catana – I have been passionate
-                    about all forms of art &amp; media since I was very young.
-                    Through the years of learning and networking, I have reached
-                    the point where I make others&apos; dreams and
-                    imaginations become a reality!
-                  </p>
-                  <p>
-                    I don&apos;t just point a camera. I immerse myself in the
-                    project. I work closely with every client to understand what
-                    your media platform or art needs to achieve the goals we set.
-                    Then we start constructing foundations and pillars to make
-                    processes and goals easier and faster to achieve! From Indie
-                    shoots to high-end productions, the standards stay the same.
-                  </p>
-                  <p>
-                    300M+ views and counting, but the numbers aren&apos;t the
-                    point. The point is making something that artists and fans
-                    keep coming back to watch.
-                  </p>
+                  <p>{t.about.bio1}</p>
+                  <p>{t.about.bio2}</p>
+                  <p>{t.about.bio3}</p>
                 </div>
               </Reveal>
 

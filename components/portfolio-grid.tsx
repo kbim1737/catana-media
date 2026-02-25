@@ -7,6 +7,7 @@ import { createPortal } from "react-dom"
 import { Reveal, FlipReveal } from "@/components/animated"
 import { useScrollAnimation } from "@/hooks/use-scroll-animation"
 import { projects, categories, type Project } from "@/lib/data"
+import { useTranslation } from "@/hooks/use-translation"
 
 function shuffle<T>(arr: T[]): T[] {
   const a = [...arr]
@@ -178,6 +179,7 @@ function HorizontalCard({
 }
 
 export function PortfolioGrid() {
+  const { t } = useTranslation()
   const [activeFilter, setActiveFilter] = useState("All")
   const [layout, setLayout] = useState<Layout>("cinema")
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null)
@@ -259,7 +261,7 @@ export function PortfolioGrid() {
                           : "border border-border text-muted-foreground hover:text-foreground hover:border-foreground/50"
                       }`}
                     >
-                      {cat}
+                      {cat === "All" ? t.portfolio.filterAll : cat}
                     </button>
                   ))}
 
@@ -324,7 +326,7 @@ export function PortfolioGrid() {
           <button
             onClick={() => goPrev()}
             className="absolute left-0 lg:left-[2%] top-1/2 -translate-y-1/2 z-10 flex items-center justify-center p-6 text-white/60 hover:text-white transition-colors duration-300"
-            aria-label="Previous video"
+            aria-label={t.portfolio.ariaPrev}
           >
             <ChevronLeft className="h-16 w-16 lg:h-20 lg:w-20" strokeWidth={1.5} />
           </button>
@@ -333,7 +335,7 @@ export function PortfolioGrid() {
           <button
             onClick={() => goNext()}
             className="absolute right-0 lg:right-[2%] top-1/2 -translate-y-1/2 z-10 flex items-center justify-center p-6 text-white/60 hover:text-white transition-colors duration-300"
-            aria-label="Next video"
+            aria-label={t.portfolio.ariaNext}
           >
             <ChevronRight className="h-16 w-16 lg:h-20 lg:w-20" strokeWidth={1.5} />
           </button>
@@ -342,7 +344,7 @@ export function PortfolioGrid() {
           <button
             onClick={() => setSelectedIndex(null)}
             className="absolute top-4 right-4 z-10 p-2 text-white/60 hover:text-white transition-colors duration-300"
-            aria-label="Close"
+            aria-label={t.portfolio.ariaClose}
           >
             <X className="h-8 w-8" strokeWidth={1.5} />
           </button>

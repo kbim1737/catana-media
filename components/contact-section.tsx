@@ -5,8 +5,10 @@ import { ArrowUpRight, Instagram, Youtube, Mail, Loader2, Check } from "lucide-r
 import Link from "next/link"
 import { Reveal, SectionReveal3D, FlipReveal } from "@/components/animated"
 import { useScrollAnimation } from "@/hooks/use-scroll-animation"
+import { useTranslation } from "@/hooks/use-translation"
 
 export function ContactSection() {
+  const { t } = useTranslation()
   const { ref: formRef, isVisible: formVisible } = useScrollAnimation({ threshold: 0.1 })
   const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">("idle")
   const formElementRef = useRef<HTMLFormElement>(null)
@@ -41,6 +43,11 @@ export function ContactSection() {
     }
   }
 
+  const formFields = [
+    { id: "name", label: t.contact.labelName, type: "text", placeholder: t.contact.placeholderName },
+    { id: "email", label: t.contact.labelEmail, type: "email", placeholder: t.contact.placeholderEmail },
+  ]
+
   return (
     <SectionReveal3D origin="bottom" intensity="dramatic">
       <section id="contact" className="py-24 lg:py-32 relative overflow-hidden">
@@ -54,15 +61,18 @@ export function ContactSection() {
             <div>
               <Reveal direction="left" delay={0.15}>
                 <h2 className="text-4xl lg:text-6xl font-bold tracking-tighter text-foreground text-balance mb-6">
-                  Let&apos;s Create
-                  <br />
-                  Something <span className="text-primary">Iconic</span>
+                  {t.contact.heading.split("\n").map((line, i) => (
+                    <span key={i}>
+                      {line}
+                      {i === 0 && <br />}
+                    </span>
+                  ))}{" "}
+                  <span className="text-primary">{t.contact.headingAccent}</span>
                 </h2>
               </Reveal>
               <Reveal direction="left" delay={0.3}>
                 <p className="text-muted-foreground leading-relaxed max-w-md">
-                  Indie Or Major -- I bring the same energy
-                  and attention to every project.
+                  {t.contact.description}
                 </p>
               </Reveal>
 
@@ -107,10 +117,7 @@ export function ContactSection() {
                 />
 
                 <form ref={formElementRef} onSubmit={handleSubmit} className="flex flex-col gap-6">
-                  {[
-                    { id: "name", label: "Name", type: "text", placeholder: "Your name" },
-                    { id: "email", label: "Email", type: "email", placeholder: "your@email.com" },
-                  ].map((field, i) => (
+                  {formFields.map((field, i) => (
                     <div
                       key={field.id}
                       className="flex flex-col gap-2"
@@ -149,7 +156,7 @@ export function ContactSection() {
                       htmlFor="project"
                       className="text-xs uppercase tracking-widest text-muted-foreground"
                     >
-                      Project Type
+                      {t.contact.labelProject}
                     </label>
                     <select
                       id="project"
@@ -158,13 +165,13 @@ export function ContactSection() {
                       defaultValue=""
                     >
                       <option value="" disabled className="bg-card text-muted-foreground">
-                        Select a project type
+                        {t.contact.placeholderProject}
                       </option>
-                      <option value="music-video" className="bg-card text-foreground">Music Video</option>
-                      <option value="visual-album" className="bg-card text-foreground">Visual Album</option>
-                      <option value="short-film" className="bg-card text-foreground">Short Film</option>
-                      <option value="commercial" className="bg-card text-foreground">Commercial</option>
-                      <option value="other" className="bg-card text-foreground">Other</option>
+                      <option value="music-video" className="bg-card text-foreground">{t.contact.projectMusicVideo}</option>
+                      <option value="visual-album" className="bg-card text-foreground">{t.contact.projectVisualAlbum}</option>
+                      <option value="short-film" className="bg-card text-foreground">{t.contact.projectShortFilm}</option>
+                      <option value="commercial" className="bg-card text-foreground">{t.contact.projectCommercial}</option>
+                      <option value="other" className="bg-card text-foreground">{t.contact.projectOther}</option>
                     </select>
                   </div>
 
@@ -180,14 +187,14 @@ export function ContactSection() {
                       htmlFor="message"
                       className="text-xs uppercase tracking-widest text-muted-foreground"
                     >
-                      Message
+                      {t.contact.labelMessage}
                     </label>
                     <textarea
                       id="message"
                       name="message"
                       rows={4}
                       required
-                      placeholder="Tell me about your vision..."
+                      placeholder={t.contact.placeholderMessage}
                       className="bg-transparent border-b border-border pb-3 text-foreground placeholder:text-muted-foreground/50 focus:border-primary focus:outline-none transition-colors duration-300 resize-none"
                     />
                   </div>
@@ -204,10 +211,10 @@ export function ContactSection() {
                   >
                     {status === "sending" && <Loader2 className="h-4 w-4 animate-spin" />}
                     {status === "sent" && <Check className="h-4 w-4" />}
-                    {status === "idle" && "Send Message"}
-                    {status === "sending" && "Sending..."}
-                    {status === "sent" && "Message Sent!"}
-                    {status === "error" && "Failed — Try Again"}
+                    {status === "idle" && t.contact.buttonSend}
+                    {status === "sending" && t.contact.buttonSending}
+                    {status === "sent" && t.contact.buttonSent}
+                    {status === "error" && t.contact.buttonError}
                   </button>
                 </form>
               </div>

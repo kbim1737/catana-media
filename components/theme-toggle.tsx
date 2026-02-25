@@ -1,8 +1,10 @@
 "use client"
 
 import { useState, useEffect } from "react"
+import { useTranslation } from "@/hooks/use-translation"
 
 export function ThemeToggle() {
+  const { t } = useTranslation()
   const [dark, setDark] = useState(true)
   const [mounted, setMounted] = useState(false)
 
@@ -31,7 +33,7 @@ export function ThemeToggle() {
       style={{
         backgroundColor: dark ? "oklch(0.65 0.17 230)" : "oklch(0.55 0.24 350)",
       }}
-      aria-label={dark ? "Switch to light mode" : "Switch to dark mode"}
+      aria-label={dark ? t.theme.switchToLight : t.theme.switchToDark}
     >
       <div className="absolute inset-0 rounded-full shadow-[inset_0_1px_3px_rgba(0,0,0,0.3)]" />
       <div

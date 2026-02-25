@@ -2,29 +2,32 @@
 
 import { Quote } from "lucide-react"
 import { Reveal, SectionReveal3D, LineGrow, FlipReveal } from "@/components/animated"
+import { useTranslation } from "@/hooks/use-translation"
 
 const testimonials = [
   {
     quote:
       "Kristof doesn't just direct videos -- he builds entire universes around the music. Every project we've done together has been a career-defining moment.",
     name: "Kai Vega",
-    role: "Recording Artist",
+    roleKey: "roleRecordingArtist" as const,
   },
   {
     quote:
       "The attention to detail is insane. He showed up with a vision that was ten times bigger than what I imagined, and he delivered on every single frame.",
     name: "Dex Monroe",
-    role: "Recording Artist",
+    roleKey: "roleRecordingArtist" as const,
   },
   {
     quote:
-      "Chris Catana is the epitome of a hands-on, efficient producer — the kind of person every production needs on the ground. Over the course of our time working together, Chris demonstrated a level of versatility that is genuinely rare in television. Chris is a true jack of all trades, and more importantly, he executes at a high level across all of them. Any production would be fortunate to have him.",
+      "Chris Catana is the epitome of a hands-on, efficient producer \u2014 the kind of person every production needs on the ground. Over the course of our time working together, Chris demonstrated a level of versatility that is genuinely rare in television. Chris is a true jack of all trades, and more importantly, he executes at a high level across all of them. Any production would be fortunate to have him.",
     name: "Don Sikorski",
-    role: "EP/Showrunner",
+    roleKey: "roleEPShowrunner" as const,
   },
 ]
 
 export function Testimonials() {
+  const { t } = useTranslation()
+
   return (
     <SectionReveal3D origin="right" intensity="dramatic" threshold={0} rootMargin="0px 0px 100px 0px">
       <section className="py-24 lg:py-32 bg-card">
@@ -32,7 +35,7 @@ export function Testimonials() {
           <div className="text-center mb-6">
             <Reveal>
               <p className="text-xl lg:text-2xl uppercase tracking-[0.3em] text-primary mb-3">
-                Testimonials
+                {t.testimonials.title}
               </p>
             </Reveal>
           </div>
@@ -42,12 +45,12 @@ export function Testimonials() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {testimonials.map((t, i) => (
-              <FlipReveal key={t.name} axis="x" delay={i * 0.1} threshold={0} rootMargin="0px 0px 100px 0px">
+            {testimonials.map((item, i) => (
+              <FlipReveal key={item.name} axis="x" delay={i * 0.1} threshold={0} rootMargin="0px 0px 100px 0px">
                 <div className="group border border-border p-8 lg:p-10 hover:border-primary/30 transition-colors duration-500 relative overflow-hidden h-full">
                   <Quote className="h-8 w-8 text-primary/30 mb-6 group-hover:text-primary/60 transition-colors duration-500" />
                   <blockquote className="text-foreground/90 text-lg lg:text-xl leading-relaxed mb-8">
-                    {t.quote}
+                    {item.quote}
                   </blockquote>
 
                   {/* Expanding divider */}
@@ -55,10 +58,10 @@ export function Testimonials() {
 
                   <div>
                     <p className="font-bold text-foreground group-hover:text-primary transition-colors duration-500">
-                      {t.name}
+                      {item.name}
                     </p>
                     <p className="text-xs uppercase tracking-widest text-muted-foreground mt-1">
-                      {t.role}
+                      {t.testimonials[item.roleKey]}
                     </p>
                   </div>
                 </div>

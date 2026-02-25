@@ -1,20 +1,23 @@
 "use client"
 
 import { useScrollAnimation } from "@/hooks/use-scroll-animation"
+import { useTranslation } from "@/hooks/use-translation"
 
 export function MarqueeTicker() {
+  const { t } = useTranslation()
+
   const items = [
-    "Creative Direction",
-    "Live Performance",
-    "AUDIO",
-    "VIDEO",
-    "PHOTO",
-    "PRE PRODUCTION",
-    "PRODUCTION",
-    "POST PRODUCTION",
-    "EDITING",
-    "SOCIAL MEDIA OPERATIONS",
-    "EVENTS"
+    t.marquee.creativeDirection,
+    t.marquee.livePerformance,
+    t.marquee.audio,
+    t.marquee.video,
+    t.marquee.photo,
+    t.marquee.preProduction,
+    t.marquee.production,
+    t.marquee.postProduction,
+    t.marquee.editing,
+    t.marquee.socialMedia,
+    t.marquee.events,
   ]
 
   const { ref, isVisible } = useScrollAnimation({ threshold: 0.5 })

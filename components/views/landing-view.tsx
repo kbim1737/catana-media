@@ -1,22 +1,18 @@
 "use client"
 
 import Image from "next/image"
-import { useState, useEffect, useCallback } from "react"
+import { useState, useEffect, useCallback, useMemo } from "react"
 import { Instagram, Mail, Youtube } from "lucide-react"
 import Link from "next/link"
 import { ThemeToggle } from "@/components/theme-toggle"
+import { LanguageSwitcher } from "@/components/language-switcher"
 import { MarqueeTicker } from "@/components/marquee-ticker"
+import { useTranslation } from "@/hooks/use-translation"
 import type { ViewName } from "@/hooks/use-view-navigation"
 
 interface LandingViewProps {
   onNavigate: (view: ViewName) => void
 }
-
-const navLinks: { label: string; view: ViewName }[] = [
-  { label: "Portfolio", view: "portfolio" },
-  { label: "About", view: "about" },
-  { label: "Inquiries", view: "inquiries" },
-]
 
 const socialLinks = [
   { href: "https://www.instagram.com/catanaaudio/?hl=en", icon: Instagram, label: "Instagram" },
@@ -25,18 +21,30 @@ const socialLinks = [
 ]
 
 export function LandingView({ onNavigate }: LandingViewProps) {
+  const { t } = useTranslation()
   const [loaded, setLoaded] = useState(false)
   const [tilted, setTilted] = useState(false)
+  const [showSweep, setShowSweep] = useState(false)
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 })
   const [isDesktop, setIsDesktop] = useState(false)
+
+  const navLinks = useMemo(
+    () => [
+      { label: t.nav.portfolio, view: "portfolio" as ViewName },
+      { label: t.nav.about, view: "about" as ViewName },
+      { label: t.nav.inquiries, view: "inquiries" as ViewName },
+    ],
+    [t]
+  )
 
   useEffect(() => {
     const check = () => setIsDesktop(window.innerWidth >= 1024)
     check()
     window.addEventListener("resize", check)
     const timer1 = setTimeout(() => setLoaded(true), 100)
-    const timer2 = setTimeout(() => setTilted(true), 1200)
-    return () => { clearTimeout(timer1); clearTimeout(timer2); window.removeEventListener("resize", check) }
+    const timer2 = setTimeout(() => { setTilted(true); setShowSweep(true) }, 1200)
+    const timer3 = setTimeout(() => setShowSweep(false), 2200)
+    return () => { clearTimeout(timer1); clearTimeout(timer2); clearTimeout(timer3); window.removeEventListener("resize", check) }
   }, [])
 
   const handleMouseMove = useCallback((e: React.MouseEvent) => {
@@ -95,7 +103,7 @@ export function LandingView({ onNavigate }: LandingViewProps) {
           ))}
         </div>
 
-        {/* Top bar: Logo + Theme Toggle */}
+        {/* Top bar: Logo + Theme Toggle + Language Switcher */}
         <div className="relative z-10 flex items-center justify-between px-6 lg:px-12 pt-6 lg:pt-8">
           <div
             className="flex items-center gap-0.5 lg:gap-3"
@@ -116,16 +124,18 @@ export function LandingView({ onNavigate }: LandingViewProps) {
             </span>
             <span className="w-px h-8 lg:h-6 bg-primary" />
             <span className="text-xs lg:text-sm uppercase tracking-[0.2em] text-primary font-medium ml-2.5 lg:ml-0">
-              Creative Multimedia Director
+              {t.landing.subtitle}
             </span>
           </div>
           <div
+            className="flex items-center gap-3"
             style={{
               opacity: loaded ? 1 : 0,
               transform: loaded ? "translate3d(0, 0, 0)" : "translate3d(20px, 0, 0)",
               transition: "all 0.6s ease 0.5s",
             }}
           >
+            <LanguageSwitcher />
             <ThemeToggle />
           </div>
         </div>
@@ -152,9 +162,15 @@ export function LandingView({ onNavigate }: LandingViewProps) {
                       : `transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) ${i * 0.08}s, opacity 0.8s ease ${0.4 + i * 0.12}s`,
                   }}
                 >
-                  <span className="relative inline-block text-6xl md:text-7xl lg:text-8xl font-bold tracking-tighter text-white transition-colors duration-300 group-hover:text-primary">
+                  <span className="relative inline-block text-6xl md:text-7xl lg:text-8xl font-bold tracking-tight text-white transition-colors duration-300 group-hover:text-primary">
                     {link.label}
                     <span className="absolute -bottom-1 left-0 w-0 h-1 bg-primary group-hover:w-full transition-all duration-500 ease-out" />
+                    {showSweep && !isDesktop && (
+                      <span
+                        className="absolute -bottom-1 left-0 w-full h-1 bg-primary animate-underline-sweep"
+                        style={{ animationDelay: `${i * 0.1}s` }}
+                      />
+                    )}
                   </span>
                 </button>
               ))}
@@ -177,11 +193,18 @@ export function LandingView({ onNavigate }: LandingViewProps) {
               }}
             >
               <h1 className="text-5xl md:text-5xl lg:text-7xl font-bold tracking-tighter text-white leading-[0.9]">
-                Same{" "}
-                <span className="text-primary">Standards</span>
-                <br />
-                Around the{" "}
-                <span className="text-primary">World</span>
+                {t.landing.sameStandards.split(" ").map((word, i, arr) => (
+                  <span key={i}>
+                    {i === 0 ? word + " " : ""}
+                    {i === 1 ? <span className="text-primary">{word}</span> : ""}
+                    {i === 1 && <br />}
+                  </span>
+                ))}
+                {t.landing.aroundTheWorld.split(" ").map((word, i, arr) => (
+                  <span key={`w-${i}`}>
+                    {i < arr.length - 1 ? word + " " : <span className="text-primary">{word}</span>}
+                  </span>
+                ))}
               </h1>
             </div>
           </div>

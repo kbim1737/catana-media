@@ -159,6 +159,26 @@ html {
   animation: fade-in 0.6s ease-out forwards;
 }
 
+/* Nav link underline sweep on tilt — snake passing right to left */
+@keyframes underline-sweep {
+  0% {
+    left: 100%;
+    width: 0;
+  }
+  40% {
+    left: 30%;
+    width: 30%;
+  }
+  100% {
+    left: 0%;
+    width: 0;
+  }
+}
+
+.animate-underline-sweep {
+  animation: underline-sweep 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
 /* View transition overlay — cinematic wipe */
 @keyframes cinematic-wipe {
   0% {
