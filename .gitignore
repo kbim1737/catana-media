@@ -3,6 +3,11 @@
 node_modules
 .next
 pnpm-lock.yaml
+
+# Environment variables (secrets)
+.env
+.env.*
+!.env.example
     
 
     

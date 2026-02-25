@@ -1,12 +1,45 @@
 "use client"
 
-import { ArrowUpRight, Instagram, Youtube, Mail } from "lucide-react"
+import { useState, useRef, type FormEvent } from "react"
+import { ArrowUpRight, Instagram, Youtube, Mail, Loader2, Check } from "lucide-react"
 import Link from "next/link"
 import { Reveal, SectionReveal3D, FlipReveal } from "@/components/animated"
 import { useScrollAnimation } from "@/hooks/use-scroll-animation"
 
 export function ContactSection() {
   const { ref: formRef, isVisible: formVisible } = useScrollAnimation({ threshold: 0.1 })
+  const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">("idle")
+  const formElementRef = useRef<HTMLFormElement>(null)
+
+  async function handleSubmit(e: FormEvent) {
+    e.preventDefault()
+    if (status === "sending") return
+
+    const form = formElementRef.current
+    if (!form) return
+
+    const formData = new FormData(form)
+    const data = {
+      name: formData.get("name") as string,
+      email: formData.get("email") as string,
+      project: formData.get("project") as string,
+      message: formData.get("message") as string,
+    }
+
+    setStatus("sending")
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      })
+      if (!res.ok) throw new Error("Failed to send")
+      setStatus("sent")
+      form.reset()
+    } catch {
+      setStatus("error")
+    }
+  }
 
   return (
     <SectionReveal3D origin="bottom" intensity="dramatic">
@@ -19,11 +52,6 @@ export function ContactSection() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24">
             {/* Left */}
             <div>
-              <Reveal direction="left">
-                <p className="text-sm uppercase tracking-[0.3em] text-primary mb-3">
-                  Contact
-                </p>
-              </Reveal>
               <Reveal direction="left" delay={0.15}>
                 <h2 className="text-4xl lg:text-6xl font-bold tracking-tighter text-foreground text-balance mb-6">
                   Let&apos;s Create
@@ -33,18 +61,17 @@ export function ContactSection() {
               </Reveal>
               <Reveal direction="left" delay={0.3}>
                 <p className="text-muted-foreground leading-relaxed max-w-md">
-                  Independent artist or major label -- I bring the same energy
-                  and attention to every project. If you&apos;ve got a track that
-                  needs a visual, let&apos;s talk.
+                  Indie Or Major -- I bring the same energy
+                  and attention to every project.
                 </p>
               </Reveal>
 
               {/* Social links */}
               <div className="mt-12 flex flex-col gap-4">
                 {[
-                  { href: "https://instagram.com", icon: Instagram, label: "Instagram", external: true },
-                  { href: "https://youtube.com", icon: Youtube, label: "YouTube", external: true },
-                  { href: "mailto:hello@kristof.studio", icon: Mail, label: "hello@kristof.studio", external: false },
+                  { href: "https://www.instagram.com/catanaaudio/?hl=en", icon: Instagram, label: "Instagram", external: true },
+                  { href: "https://www.youtube.com/@CatanaAudio", icon: Youtube, label: "YouTube", external: true },
+                  { href: "mailto:mediacatana@gmail.com", icon: Mail, label: "mediacatana@gmail.com", external: false },
                 ].map((link, i) => (
                   <Reveal key={link.label} direction="left" delay={0.4 + i * 0.1}>
                     <Link
@@ -79,7 +106,7 @@ export function ContactSection() {
                   }}
                 />
 
-                <form className="flex flex-col gap-6">
+                <form ref={formElementRef} onSubmit={handleSubmit} className="flex flex-col gap-6">
                   {[
                     { id: "name", label: "Name", type: "text", placeholder: "Your name" },
                     { id: "email", label: "Email", type: "email", placeholder: "your@email.com" },
@@ -101,7 +128,9 @@ export function ContactSection() {
                       </label>
                       <input
                         id={field.id}
+                        name={field.id}
                         type={field.type}
+                        required
                         placeholder={field.placeholder}
                         className="bg-transparent border-b border-border pb-3 text-foreground placeholder:text-muted-foreground/50 focus:border-primary focus:outline-none transition-colors duration-300"
                       />
@@ -124,6 +153,7 @@ export function ContactSection() {
                     </label>
                     <select
                       id="project"
+                      name="project"
                       className="bg-transparent border-b border-border pb-3 text-foreground focus:border-primary focus:outline-none transition-colors duration-300 appearance-none cursor-pointer"
                       defaultValue=""
                     >
@@ -154,7 +184,9 @@ export function ContactSection() {
                     </label>
                     <textarea
                       id="message"
+                      name="message"
                       rows={4}
+                      required
                       placeholder="Tell me about your vision..."
                       className="bg-transparent border-b border-border pb-3 text-foreground placeholder:text-muted-foreground/50 focus:border-primary focus:outline-none transition-colors duration-300 resize-none"
                     />
@@ -162,14 +194,20 @@ export function ContactSection() {
 
                   <button
                     type="submit"
-                    className="mt-4 bg-primary text-primary-foreground px-8 py-4 text-sm uppercase tracking-widest self-start hover:bg-primary/90 transition-colors duration-300"
+                    disabled={status === "sending" || status === "sent"}
+                    className="mt-4 bg-primary text-primary-foreground px-8 py-4 text-sm uppercase tracking-widest self-start hover:bg-primary/90 transition-colors duration-300 disabled:opacity-70 disabled:cursor-not-allowed flex items-center gap-2"
                     style={{
                       opacity: formVisible ? 1 : 0,
                       transform: formVisible ? "translate3d(0, 0, 0)" : "translate3d(0, 20px, 0)",
                       transition: "opacity 0.6s ease 0.8s, transform 0.6s ease 0.8s, background-color 0.3s ease",
                     }}
                   >
-                    Send Message
+                    {status === "sending" && <Loader2 className="h-4 w-4 animate-spin" />}
+                    {status === "sent" && <Check className="h-4 w-4" />}
+                    {status === "idle" && "Send Message"}
+                    {status === "sending" && "Sending..."}
+                    {status === "sent" && "Message Sent!"}
+                    {status === "error" && "Failed — Try Again"}
                   </button>
                 </form>
               </div>

@@ -54,7 +54,7 @@ export function AboutSection() {
                     Hey! My name is Christopher Catana – I have been passionate
                     about all forms of art &amp; media since I was very young.
                     Through the years of learning and networking, I have reached
-                    the point where I want to make others&apos; dreams and
+                    the point where I make others&apos; dreams and
                     imaginations become a reality!
                   </p>
                   <p>
@@ -62,7 +62,7 @@ export function AboutSection() {
                     project. I work closely with every client to understand what
                     your media platform or art needs to achieve the goals we set.
                     Then we start constructing foundations and pillars to make
-                    processes and goals easier and faster to achieve! From $0
+                    processes and goals easier and faster to achieve! From Indie
                     shoots to high-end productions, the standards stay the same.
                   </p>
                   <p>

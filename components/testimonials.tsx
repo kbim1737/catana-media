@@ -26,7 +26,7 @@ const testimonials = [
 
 export function Testimonials() {
   return (
-    <SectionReveal3D origin="right" intensity="dramatic">
+    <SectionReveal3D origin="right" intensity="dramatic" threshold={0} rootMargin="0px 0px 100px 0px">
       <section className="py-24 lg:py-32 bg-card">
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
           <div className="text-center mb-6">
@@ -43,7 +43,7 @@ export function Testimonials() {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {testimonials.map((t, i) => (
-              <FlipReveal key={t.name} axis="x" delay={i * 0.15}>
+              <FlipReveal key={t.name} axis="x" delay={i * 0.1} threshold={0} rootMargin="0px 0px 100px 0px">
                 <div className="group border border-border p-8 lg:p-10 hover:border-primary/30 transition-colors duration-500 relative overflow-hidden h-full">
                   <Quote className="h-8 w-8 text-primary/30 mb-6 group-hover:text-primary/60 transition-colors duration-500" />
                   <blockquote className="text-foreground/90 text-lg lg:text-xl leading-relaxed mb-8">

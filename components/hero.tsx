@@ -33,7 +33,7 @@ export function Hero() {
           }}
         >
           <Image
-            src="/images/hero-bg2.jpg"
+            src="/images/hero-bg5.jpg"
             alt=""
             fill
             className="object-cover"

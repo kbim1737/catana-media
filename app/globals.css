@@ -129,7 +129,6 @@
 
 html {
   overflow-x: hidden;
-  scroll-behavior: smooth;
 }
 
 @keyframes fade-up {
@@ -158,4 +157,28 @@ html {
 
 .animate-fade-in {
   animation: fade-in 0.6s ease-out forwards;
+}
+
+/* View transition overlay — cinematic wipe */
+@keyframes cinematic-wipe {
+  0% {
+    transform: scaleY(0);
+    transform-origin: bottom;
+  }
+  45% {
+    transform: scaleY(1);
+    transform-origin: bottom;
+  }
+  55% {
+    transform: scaleY(1);
+    transform-origin: top;
+  }
+  100% {
+    transform: scaleY(0);
+    transform-origin: top;
+  }
+}
+
+.view-transition-overlay {
+  animation: cinematic-wipe 1.2s cubic-bezier(0.76, 0, 0.24, 1) forwards;
 }

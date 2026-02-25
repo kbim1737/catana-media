@@ -1,8 +1,9 @@
 "use client"
 
 import Image from "next/image"
-import { Play, ChevronLeft, ChevronRight } from "lucide-react"
+import { Play, ChevronLeft, ChevronRight, X } from "lucide-react"
 import { useState, useEffect, useMemo, useCallback } from "react"
+import { createPortal } from "react-dom"
 import { Reveal, FlipReveal } from "@/components/animated"
 import { useScrollAnimation } from "@/hooks/use-scroll-animation"
 import { projects, categories, type Project } from "@/lib/data"
@@ -15,22 +16,17 @@ function shuffle<T>(arr: T[]): T[] {
   }
   return a
 }
-import {
-  Dialog,
-  DialogContent,
-  DialogTitle,
-  DialogDescription,
-} from "@/components/ui/dialog"
 
 type Layout = "cinema" | "two" | "one"
 
 const layoutIcons: { value: Layout; icon: React.ReactNode }[] = [
   {
-    value: "one",
+    value: "cinema",
     icon: (
       <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
         <rect x="1" y="2" width="14" height="5" rx="1" fill="currentColor" />
-        <rect x="1" y="9" width="14" height="5" rx="1" fill="currentColor" />
+        <rect x="1" y="9" width="6" height="5" rx="1" fill="currentColor" />
+        <rect x="9" y="9" width="6" height="5" rx="1" fill="currentColor" />
       </svg>
     ),
   },
@@ -46,12 +42,11 @@ const layoutIcons: { value: Layout; icon: React.ReactNode }[] = [
     ),
   },
   {
-    value: "cinema",
+    value: "one",
     icon: (
       <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
         <rect x="1" y="2" width="14" height="5" rx="1" fill="currentColor" />
-        <rect x="1" y="9" width="6" height="5" rx="1" fill="currentColor" />
-        <rect x="9" y="9" width="6" height="5" rx="1" fill="currentColor" />
+        <rect x="1" y="9" width="14" height="5" rx="1" fill="currentColor" />
       </svg>
     ),
   },
@@ -99,7 +94,7 @@ function ProjectCard({
               <p className="text-xs uppercase tracking-widest text-primary mb-1">
                 {project.title}
               </p>
-              <h3 className="text-xl lg:text-2xl font-bold tracking-tight text-foreground">
+              <h3 className="text-xl lg:text-2xl font-bold tracking-tight text-white">
                 {project.artist}
               </h3>
             </div>
@@ -108,10 +103,10 @@ function ProjectCard({
                 {project.role}
               </p>
               <div className="transition-all duration-500 translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100">
-                <p className="text-xs uppercase tracking-widest text-foreground">
+                <p className="text-xs uppercase tracking-widest text-white">
                   {project.category}
                 </p>
-                <p className="text-sm text-foreground">{project.year}</p>
+                <p className="text-sm text-white">{project.year}</p>
               </div>
             </div>
           </div>
@@ -230,6 +225,7 @@ export function PortfolioGrid() {
     const handleKey = (e: KeyboardEvent) => {
       if (e.key === "ArrowRight") goNext()
       if (e.key === "ArrowLeft") goPrev()
+      if (e.key === "Escape") setSelectedIndex(null)
     }
     window.addEventListener("keydown", handleKey)
     return () => window.removeEventListener("keydown", handleKey)
@@ -242,19 +238,14 @@ export function PortfolioGrid() {
 
   return (
     <>
-        <section id="work" className="py-24 lg:py-32">
+        <section id="work" className="py-8 lg:py-12">
           <div className="mx-auto max-w-7xl px-6 lg:px-8">
             {/* Section header */}
             <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-16">
               <Reveal direction="left">
-                <div>
-                  <p className="text-sm uppercase tracking-[0.3em] text-primary mb-3">
-                    Selected Work
-                  </p>
-                  <h2 className="text-4xl lg:text-6xl font-bold tracking-tighter text-foreground text-balance">
-                    Recent Work
-                  </h2>
-                </div>
+                <h2 className="text-4xl lg:text-6xl font-bold tracking-tighter text-foreground text-balance">
+                  CATANA MEDIA
+                </h2>
               </Reveal>
               <Reveal direction="right" delay={0.2}>
                 <div className="flex items-center gap-2 flex-wrap">
@@ -323,38 +314,42 @@ export function PortfolioGrid() {
           </div>
         </section>
 
-      {/* Video Modal */}
-      <Dialog
-        open={selectedIndex !== null}
-        onOpenChange={(open) => {
-          if (!open) setSelectedIndex(null)
-        }}
-      >
-        {/* Navigation arrows — outside the dialog content */}
-        {selectedIndex !== null && (
-          <>
-            <button
-              onClick={(e) => { e.stopPropagation(); goPrev() }}
-              className="fixed left-[3%] lg:left-[5%] top-1/2 -translate-y-1/2 z-[60] flex items-center justify-center text-white/60 hover:text-white transition-colors duration-300"
-              aria-label="Previous video"
-            >
-              <ChevronLeft className="h-14 w-14" strokeWidth={1.5} />
-            </button>
-            <button
-              onClick={(e) => { e.stopPropagation(); goNext() }}
-              className="fixed right-[3%] lg:right-[5%] top-1/2 -translate-y-1/2 z-[60] flex items-center justify-center text-white/60 hover:text-white transition-colors duration-300"
-              aria-label="Next video"
-            >
-              <ChevronRight className="h-14 w-14" strokeWidth={1.5} />
-            </button>
-          </>
-        )}
+      {/* Video Modal — custom, no Radix */}
+      {selectedIndex !== null && selectedProject && typeof document !== "undefined" && createPortal(
+        <div className="fixed inset-0 z-50">
+          {/* Backdrop — click to close */}
+          <div className="absolute inset-0 bg-black/80 animate-in fade-in-0 duration-200" onClick={() => setSelectedIndex(null)} />
 
-        <DialogContent
-          className="sm:max-w-4xl p-0 gap-0 overflow-hidden bg-background border-border"
-        >
-          {selectedProject && (
-            <>
+          {/* Arrow: prev */}
+          <button
+            onClick={() => goPrev()}
+            className="absolute left-0 lg:left-[2%] top-1/2 -translate-y-1/2 z-10 flex items-center justify-center p-6 text-white/60 hover:text-white transition-colors duration-300"
+            aria-label="Previous video"
+          >
+            <ChevronLeft className="h-16 w-16 lg:h-20 lg:w-20" strokeWidth={1.5} />
+          </button>
+
+          {/* Arrow: next */}
+          <button
+            onClick={() => goNext()}
+            className="absolute right-0 lg:right-[2%] top-1/2 -translate-y-1/2 z-10 flex items-center justify-center p-6 text-white/60 hover:text-white transition-colors duration-300"
+            aria-label="Next video"
+          >
+            <ChevronRight className="h-16 w-16 lg:h-20 lg:w-20" strokeWidth={1.5} />
+          </button>
+
+          {/* Close button */}
+          <button
+            onClick={() => setSelectedIndex(null)}
+            className="absolute top-4 right-4 z-10 p-2 text-white/60 hover:text-white transition-colors duration-300"
+            aria-label="Close"
+          >
+            <X className="h-8 w-8" strokeWidth={1.5} />
+          </button>
+
+          {/* Modal content */}
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-4xl px-4">
+            <div className="bg-background border border-border rounded-lg overflow-hidden shadow-2xl animate-in zoom-in-95 fade-in-0 duration-200">
               <div className="relative w-full aspect-video">
                 <iframe
                   key={selectedProject.id}
@@ -367,21 +362,22 @@ export function PortfolioGrid() {
               </div>
               <div className="p-6 flex items-start justify-between">
                 <div>
-                  <DialogTitle className="text-lg font-bold tracking-tight">
+                  <h3 className="text-lg font-bold tracking-tight text-foreground">
                     {selectedProject.artist}
-                  </DialogTitle>
-                  <DialogDescription className="text-sm text-primary mt-1">
+                  </h3>
+                  <p className="text-sm text-primary mt-1">
                     {selectedProject.title}
-                  </DialogDescription>
+                  </p>
                 </div>
                 <p className="text-xs uppercase tracking-widest text-muted-foreground pt-1">
                   {selectedProject.role}
                 </p>
               </div>
-            </>
-          )}
-        </DialogContent>
-      </Dialog>
+            </div>
+          </div>
+        </div>,
+        document.body
+      )}
     </>
   )
 }

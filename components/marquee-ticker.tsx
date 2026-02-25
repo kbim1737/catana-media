@@ -32,28 +32,37 @@ export function MarqueeTicker() {
       <div className="absolute left-0 top-0 bottom-0 w-24 bg-gradient-to-r from-background to-transparent z-10 pointer-events-none" />
       <div className="absolute right-0 top-0 bottom-0 w-24 bg-gradient-to-l from-background to-transparent z-10 pointer-events-none" />
 
-      <div className="flex items-center animate-marquee whitespace-nowrap hover:[animation-play-state:paused]">
-        {[...items, ...items, ...items].map((item, i) => (
-          <span
-            key={`${item}-${i}`}
-            className="inline-flex items-center text-sm uppercase tracking-[0.3em] text-muted-foreground hover:text-primary transition-colors duration-300 cursor-default"
-          >
-            <span className="mx-6">{item}</span>
-            <span className="text-primary/60 text-xs">&#x2022;</span>
-          </span>
-        ))}
+      <div
+        className="flex items-center whitespace-nowrap hover:[animation-play-state:paused] marquee-ticker-scroll"
+      >
+        {Array.from({ length: 5 }).flatMap((_, setIndex) =>
+          items.map((item, i) => (
+            <span
+              key={`${setIndex}-${i}`}
+              className="inline-flex items-center text-sm uppercase tracking-[0.3em] text-muted-foreground hover:text-primary transition-colors duration-300 cursor-default"
+            >
+              <span className="mx-6">{item}</span>
+              <span className="text-primary/60 text-xs">&#x2022;</span>
+            </span>
+          ))
+        )}
       </div>
-      <style jsx>{`
-        @keyframes marquee {
+      <style jsx global>{`
+        @keyframes marquee-scroll {
           0% {
-            transform: translateX(0%);
+            transform: translateX(0);
           }
           100% {
-            transform: translateX(-33.33%);
+            transform: translateX(-60%);
           }
         }
-        .animate-marquee {
-          animation: marquee 25s linear infinite;
+        .marquee-ticker-scroll {
+          animation: marquee-scroll 7s linear infinite;
+        }
+        @media (min-width: 768px) {
+          .marquee-ticker-scroll {
+            animation: marquee-scroll 18s linear infinite;
+          }
         }
       `}</style>
     </div>

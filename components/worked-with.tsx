@@ -18,7 +18,7 @@ const collaborators = [
 
 function LogoCard({ src, alt, scale = 1 }: { src: string; alt: string; scale?: number }) {
   return (
-    <div className="flex-shrink-0 w-72 h-40 mx-8 flex items-center justify-center px-6 relative">
+    <div className="flex-shrink-0 w-28 h-16 mx-2 md:w-48 md:h-20 md:mx-6 flex items-center justify-center px-2 md:px-4 relative">
       <div className="relative w-full h-full" style={{ transform: `scale(${scale})` }}>
         <Image
           src={src}
@@ -31,44 +31,48 @@ function LogoCard({ src, alt, scale = 1 }: { src: string; alt: string; scale?: n
   )
 }
 
-export function WorkedWith() {
+export function WorkedWith({ showTitle = false }: { showTitle?: boolean }) {
   const { ref, isVisible } = useScrollAnimation({ threshold: 0.1 })
-
-  const logos = [...collaborators, ...collaborators, ...collaborators]
 
   return (
     <section
       ref={ref}
-      className="py-12 lg:py-16 overflow-hidden bg-primary"
+      className={`overflow-hidden bg-primary ${showTitle ? "py-12 lg:py-16" : "py-6 lg:py-8"}`}
       style={{
         opacity: isVisible ? 1 : 0,
         transition: "opacity 0.8s ease",
       }}
     >
-      <div className="mx-auto max-w-7xl px-6 lg:px-8">
-        <div className="text-center mb-6">
-          <Reveal>
-            <p className="text-xl lg:text-2xl uppercase tracking-[0.3em] text-primary-foreground mb-3">
-              Worked With
-            </p>
-          </Reveal>
-        </div>
+      {showTitle && (
+        <div className="mx-auto max-w-7xl px-6 lg:px-8">
+          <div className="text-center mb-6">
+            <Reveal>
+              <p className="text-xl lg:text-2xl uppercase tracking-[0.3em] text-primary-foreground mb-3">
+                Worked With
+              </p>
+            </Reveal>
+          </div>
 
-        <div className="flex justify-center mb-8">
-          <LineGrow className="w-24 h-px bg-primary-foreground/40" delay={0.3} />
+          <div className="flex justify-center mb-8">
+            <LineGrow className="w-24 h-px bg-primary-foreground/40" delay={0.3} />
+          </div>
         </div>
-      </div>
+      )}
 
-      {/* Scrolling logos */}
+      {/* Scrolling logos — 5x duplication for seamless infinite loop */}
       <div className="relative">
-        {/* Fade edges */}
         <div className="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-primary to-transparent z-10 pointer-events-none" />
         <div className="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-primary to-transparent z-10 pointer-events-none" />
 
-        <div className="flex animate-logo-scroll hover:[animation-play-state:paused]">
-          {logos.map((logo, i) => (
-            <LogoCard key={`${logo.src}-${i}`} src={logo.src} alt={logo.alt} scale={logo.scale} />
-          ))}
+        <div
+          className="flex hover:[animation-play-state:paused]"
+          style={{ animation: "logo-scroll 12s linear infinite" }}
+        >
+          {Array.from({ length: 5 }).flatMap((_, setIndex) =>
+            collaborators.map((logo, i) => (
+              <LogoCard key={`${setIndex}-${i}`} src={logo.src} alt={logo.alt} scale={logo.scale} />
+            ))
+          )}
         </div>
       </div>
 
@@ -78,11 +82,8 @@ export function WorkedWith() {
             transform: translateX(0);
           }
           100% {
-            transform: translateX(-33.33%);
+            transform: translateX(-60%);
           }
-        }
-        .animate-logo-scroll {
-          animation: logo-scroll 30s linear infinite;
         }
       `}</style>
     </section>
