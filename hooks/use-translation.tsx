@@ -31,9 +31,15 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
   const [mounted, setMounted] = useState(false)
 
   useEffect(() => {
+    // Priority: URL ?lang= param > localStorage > browser detection
+    const urlLang = new URLSearchParams(window.location.search).get("lang") as Locale | null
     const saved = localStorage.getItem(STORAGE_KEY) as Locale | null
-    const initial = saved && SUPPORTED.includes(saved) ? saved : detectBrowserLocale()
+    const initial =
+      urlLang && SUPPORTED.includes(urlLang) ? urlLang :
+      saved && SUPPORTED.includes(saved) ? saved :
+      detectBrowserLocale()
     setLocaleState(initial)
+    localStorage.setItem(STORAGE_KEY, initial)
     document.documentElement.lang = initial
     setMounted(true)
   }, [])
@@ -42,6 +48,14 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
     setLocaleState(next)
     localStorage.setItem(STORAGE_KEY, next)
     document.documentElement.lang = next
+    // Update URL to reflect language choice
+    const url = new URL(window.location.href)
+    if (next === "en") {
+      url.searchParams.delete("lang")
+    } else {
+      url.searchParams.set("lang", next)
+    }
+    window.history.replaceState({}, "", url.toString())
   }, [])
 
   const value: TranslationContextValue = {

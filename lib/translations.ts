@@ -38,11 +38,13 @@ export interface TranslationStrings {
     placeholderEmail: string
     placeholderProject: string
     placeholderMessage: string
-    projectMusicVideo: string
-    projectVisualAlbum: string
-    projectShortFilm: string
-    projectCommercial: string
-    projectOther: string
+    projectProduction: string
+    projectAudio: string
+    projectVideo: string
+    projectPhoto: string
+    projectSocialMedia: string
+    projectEditing: string
+    projectEvents: string
     buttonSend: string
     buttonSending: string
     buttonSent: string
@@ -53,10 +55,16 @@ export interface TranslationStrings {
     title: string
     roleRecordingArtist: string
     roleEPShowrunner: string
+    quote1: string
+    quote2: string
+    quote3: string
   }
   // Portfolio
   portfolio: {
     filterAll: string
+    filterVideography: string
+    filterAudio: string
+    filterPhotography: string
     ariaClose: string
     ariaPrev: string
     ariaNext: string
@@ -127,11 +135,13 @@ export const translations: Record<Locale, TranslationStrings> = {
       placeholderEmail: "your@email.com",
       placeholderProject: "Select a project type",
       placeholderMessage: "Tell me about your vision...",
-      projectMusicVideo: "Music Video",
-      projectVisualAlbum: "Visual Album",
-      projectShortFilm: "Short Film",
-      projectCommercial: "Commercial",
-      projectOther: "Other",
+      projectProduction: "Production",
+      projectAudio: "Audio",
+      projectVideo: "Video",
+      projectPhoto: "Photo",
+      projectSocialMedia: "Social Media Operations",
+      projectEditing: "Editing",
+      projectEvents: "Events",
       buttonSend: "Send Message",
       buttonSending: "Sending...",
       buttonSent: "Message Sent!",
@@ -141,9 +151,15 @@ export const translations: Record<Locale, TranslationStrings> = {
       title: "Testimonials",
       roleRecordingArtist: "Recording Artist",
       roleEPShowrunner: "EP/Showrunner",
+      quote1: "Kristof doesn't just direct videos -- he builds entire universes around the music. Every project we've done together has been a career-defining moment.",
+      quote2: "The attention to detail is insane. He showed up with a vision that was ten times bigger than what I imagined, and he delivered on every single frame.",
+      quote3: "Chris Catana is the epitome of a hands-on, efficient producer \u2014 the kind of person every production needs on the ground. Over the course of our time working together, Chris demonstrated a level of versatility that is genuinely rare in television. Chris is a true jack of all trades, and more importantly, he executes at a high level across all of them. Any production would be fortunate to have him.",
     },
     portfolio: {
       filterAll: "All",
+      filterVideography: "Videography",
+      filterAudio: "Audio",
+      filterPhotography: "Photography",
       ariaClose: "Close",
       ariaPrev: "Previous video",
       ariaNext: "Next video",
@@ -209,11 +225,13 @@ export const translations: Record<Locale, TranslationStrings> = {
       placeholderEmail: "tu@correo.com",
       placeholderProject: "Selecciona un tipo de proyecto",
       placeholderMessage: "Cu\u00e9ntame sobre tu visi\u00f3n...",
-      projectMusicVideo: "Video Musical",
-      projectVisualAlbum: "\u00c1lbum Visual",
-      projectShortFilm: "Cortometraje",
-      projectCommercial: "Comercial",
-      projectOther: "Otro",
+      projectProduction: "Producci\u00f3n",
+      projectAudio: "Audio",
+      projectVideo: "Video",
+      projectPhoto: "Foto",
+      projectSocialMedia: "Operaciones de Redes Sociales",
+      projectEditing: "Edici\u00f3n",
+      projectEvents: "Eventos",
       buttonSend: "Enviar Mensaje",
       buttonSending: "Enviando...",
       buttonSent: "\u00a1Mensaje Enviado!",
@@ -223,9 +241,15 @@ export const translations: Record<Locale, TranslationStrings> = {
       title: "Testimonios",
       roleRecordingArtist: "Artista Musical",
       roleEPShowrunner: "EP/Showrunner",
+      quote1: "Kristof no solo dirige videos — construye universos enteros alrededor de la música. Cada proyecto que hemos hecho juntos ha sido un momento definitorio en mi carrera.",
+      quote2: "La atención al detalle es increíble. Llegó con una visión diez veces más grande de lo que imaginé, y cumplió en cada fotograma.",
+      quote3: "Chris Catana es el ejemplo perfecto de un productor práctico y eficiente — el tipo de persona que toda producción necesita en el terreno. A lo largo de nuestro tiempo trabajando juntos, Chris demostró un nivel de versatilidad genuinamente raro en televisión. Chris es un verdadero todoterreno y, lo que es más importante, ejecuta a un alto nivel en todos los ámbitos. Cualquier producción tendría suerte de contar con él.",
     },
     portfolio: {
       filterAll: "Todos",
+      filterVideography: "Videograf\u00eda",
+      filterAudio: "Audio",
+      filterPhotography: "Fotograf\u00eda",
       ariaClose: "Cerrar",
       ariaPrev: "Video anterior",
       ariaNext: "Siguiente video",
@@ -266,8 +290,8 @@ export const translations: Record<Locale, TranslationStrings> = {
     },
     landing: {
       subtitle: "Kreat\u00edv Multim\u00e9dia Rendez\u0151",
-      sameStandards: "Ugyanazok a Sztenderdek",
-      aroundTheWorld: "Vil\u00e1gszerte",
+      sameStandards: "Azonos Szint",
+      aroundTheWorld: "Mindenhol a Vil\u00e1gon",
     },
     about: {
       label: "R\u00f3lam",
@@ -291,11 +315,13 @@ export const translations: Record<Locale, TranslationStrings> = {
       placeholderEmail: "pelda@email.com",
       placeholderProject: "V\u00e1lassz projekt t\u00edpust",
       placeholderMessage: "Mes\u00e9lj a v\u00edzi\u00f3dr\u00f3l...",
-      projectMusicVideo: "Zenei Vide\u00f3",
-      projectVisualAlbum: "Vizu\u00e1lis Album",
-      projectShortFilm: "R\u00f6vidfilm",
-      projectCommercial: "Rekl\u00e1m",
-      projectOther: "Egy\u00e9b",
+      projectProduction: "Produkci\u00f3",
+      projectAudio: "Audi\u00f3",
+      projectVideo: "Vide\u00f3",
+      projectPhoto: "Fot\u00f3",
+      projectSocialMedia: "K\u00f6z\u00f6ss\u00e9gi M\u00e9dia Kezel\u00e9s",
+      projectEditing: "V\u00e1g\u00e1s",
+      projectEvents: "Rendezv\u00e9nyek",
       buttonSend: "\u00dczenet K\u00fcld\u00e9se",
       buttonSending: "K\u00fcld\u00e9s...",
       buttonSent: "\u00dczenet Elk\u00fcldve!",
@@ -305,9 +331,15 @@ export const translations: Record<Locale, TranslationStrings> = {
       title: "V\u00e9lem\u00e9nyek",
       roleRecordingArtist: "Zenei El\u0151ad\u00f3",
       roleEPShowrunner: "EP/Showrunner",
+      quote1: "Krist\u00f3f nem csup\u00e1n vide\u00f3kat rendez \u2014 komplett univerzumokat \u00e9p\u00edt a zene k\u00f6r\u00e9. Minden k\u00f6z\u00f6s projekt\u00fcnk karrierem meghat\u00e1roz\u00f3 pillanata volt.",
+      quote2: "A r\u00e9szletekre val\u00f3 odafigyel\u00e9se hihetetlen. Olyan v\u00edzi\u00f3val \u00e9rkezett, ami t\u00edzszer nagyobb volt ann\u00e1l, amit elk\u00e9pzeltem, \u00e9s minden egyes kock\u00e1t t\u00f6k\u00e9letesen megval\u00f3s\u00edtott.",
+      quote3: "Chris Catana a megtest\u00e9s\u00edt\u0151je a gyakorlatias, hat\u00e9kony producernek \u2014 az a fajta ember, akire minden produkci\u00f3nak sz\u00fcks\u00e9ge van a terepen. A k\u00f6z\u00f6s munk\u00e1nk sor\u00e1n Chris olyan szint\u0171 sokoldal\u00fas\u00e1got mutatott, ami a telev\u00edzi\u00f3s vil\u00e1gban val\u00f3ban ritka. Chris egy igazi ezermester, \u00e9s ami m\u00e9g fontosabb, mindegyik ter\u00fcleten magas szinten teljes\u00edt. B\u00e1rmelyik produkci\u00f3 szerencs\u00e9s lenne, ha vele dolgozhatna.",
     },
     portfolio: {
       filterAll: "Mind",
+      filterVideography: "Videogr\u00e1fia",
+      filterAudio: "Audi\u00f3",
+      filterPhotography: "Fot\u00f3",
       ariaClose: "Bez\u00e1r\u00e1s",
       ariaPrev: "El\u0151z\u0151 vide\u00f3",
       ariaNext: "K\u00f6vetkez\u0151 vide\u00f3",
@@ -373,11 +405,13 @@ export const translations: Record<Locale, TranslationStrings> = {
       placeholderEmail: "email@exemplu.com",
       placeholderProject: "Selecteaz\u0103 un tip de proiect",
       placeholderMessage: "Spune-mi despre viziunea ta...",
-      projectMusicVideo: "Videoclip Muzical",
-      projectVisualAlbum: "Album Vizual",
-      projectShortFilm: "Scurtmetraj",
-      projectCommercial: "Recl\u0103m\u0103",
-      projectOther: "Altele",
+      projectProduction: "Produc\u021bie",
+      projectAudio: "Audio",
+      projectVideo: "Video",
+      projectPhoto: "Foto",
+      projectSocialMedia: "Opera\u021biuni Social Media",
+      projectEditing: "Editare",
+      projectEvents: "Evenimente",
       buttonSend: "Trimite Mesaj",
       buttonSending: "Se trimite...",
       buttonSent: "Mesaj Trimis!",
@@ -387,9 +421,15 @@ export const translations: Record<Locale, TranslationStrings> = {
       title: "Testimoniale",
       roleRecordingArtist: "Artist Muzical",
       roleEPShowrunner: "EP/Showrunner",
+      quote1: "Kristof nu doar regizeaz\u0103 videoclipuri \u2014 el construie\u0219te universuri \u00eentregi \u00een jurul muzicii. Fiecare proiect pe care l-am realizat \u00eempreun\u0103 a fost un moment definitoriu \u00een cariera mea.",
+      quote2: "Aten\u021bia la detalii este incredibil\u0103. A venit cu o viziune de zece ori mai mare dec\u00e2t ce \u00eemi imaginasem, \u0219i a livrat \u00een fiecare cadru.",
+      quote3: "Chris Catana este exemplul perfect al unui produc\u0103tor practic \u0219i eficient \u2014 genul de persoan\u0103 de care fiecare produc\u021bie are nevoie pe teren. Pe parcursul colabor\u0103rii noastre, Chris a demonstrat un nivel de versatilitate cu adev\u0103rat rar \u00een televiziune. Chris este un adev\u0103rat om bun la toate, \u0219i mai important, execut\u0103 la un nivel \u00eenalt \u00een fiecare domeniu. Orice produc\u021bie ar fi norocoas\u0103 s\u0103 \u00eel aib\u0103.",
     },
     portfolio: {
       filterAll: "Toate",
+      filterVideography: "Videografie",
+      filterAudio: "Audio",
+      filterPhotography: "Fotografie",
       ariaClose: "\u00cenchide",
       ariaPrev: "Videoclipul anterior",
       ariaNext: "Urm\u0103torul videoclip",

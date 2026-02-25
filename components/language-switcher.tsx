@@ -12,7 +12,7 @@ const languages: { code: Locale; label: string }[] = [
   { code: "ro", label: "RO" },
 ]
 
-export function LanguageSwitcher() {
+export function LanguageSwitcher({ className }: { className?: string }) {
   const { locale, setLocale } = useTranslation()
   const [open, setOpen] = useState(false)
   const ref = useRef<HTMLDivElement>(null)
@@ -31,7 +31,7 @@ export function LanguageSwitcher() {
     <div ref={ref} className="relative">
       <button
         onClick={() => setOpen(!open)}
-        className="flex items-center gap-1.5 text-foreground/70 hover:text-foreground transition-colors duration-300"
+        className={`flex items-center gap-1.5 transition-colors duration-300 ${className ?? "text-foreground/70 hover:text-foreground"}`}
         aria-label="Change language"
       >
         <Globe className="h-4 w-4" />

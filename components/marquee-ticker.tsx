@@ -36,9 +36,9 @@ export function MarqueeTicker() {
       <div className="absolute right-0 top-0 bottom-0 w-24 bg-gradient-to-l from-background to-transparent z-10 pointer-events-none" />
 
       <div
-        className="flex items-center whitespace-nowrap hover:[animation-play-state:paused] marquee-ticker-scroll"
+        className="flex w-max items-center whitespace-nowrap hover:[animation-play-state:paused] marquee-ticker-scroll"
       >
-        {Array.from({ length: 5 }).flatMap((_, setIndex) =>
+        {[0, 1].map((setIndex) =>
           items.map((item, i) => (
             <span
               key={`${setIndex}-${i}`}
@@ -56,15 +56,15 @@ export function MarqueeTicker() {
             transform: translateX(0);
           }
           100% {
-            transform: translateX(-60%);
+            transform: translateX(-50%);
           }
         }
         .marquee-ticker-scroll {
-          animation: marquee-scroll 7s linear infinite;
+          animation: marquee-scroll 22s linear infinite;
         }
         @media (min-width: 768px) {
           .marquee-ticker-scroll {
-            animation: marquee-scroll 18s linear infinite;
+            animation: marquee-scroll 45s linear infinite;
           }
         }
       `}</style>

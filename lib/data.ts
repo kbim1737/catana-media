@@ -13,7 +13,7 @@ export const projects: Project[] = [
     title: "Paul Walker",
     artist: "MaxThaDemon & 917 Rackz",
     role: "Director",
-    category: "Music Video",
+    category: "Videography",
     year: "2025",
   },
   {
@@ -21,7 +21,7 @@ export const projects: Project[] = [
     title: "Traffic Jam",
     artist: "Ola Runt",
     role: "Director & Editor",
-    category: "Music Video",
+    category: "Videography",
     year: "2025",
   },
   {
@@ -29,7 +29,7 @@ export const projects: Project[] = [
     title: "TARZAN",
     artist: "Lefty Gunplay",
     role: "Cinematographer",
-    category: "Music Video",
+    category: "Videography",
     year: "2024",
   },
   {
@@ -37,7 +37,7 @@ export const projects: Project[] = [
     title: "J ALLEY",
     artist: "Jugg Harden",
     role: "Director",
-    category: "Music Video",
+    category: "Videography",
     year: "2024",
   },
   {
@@ -45,7 +45,7 @@ export const projects: Project[] = [
     title: "ALL STARS",
     artist: "Big Sad 1900",
     role: "Director & Cinematographer",
-    category: "Music Video",
+    category: "Videography",
     year: "2024",
   },
   {
@@ -53,7 +53,7 @@ export const projects: Project[] = [
     title: "The GoodTalk Show Ep. #32",
     artist: "Wiz Khalifa",
     role: "Director",
-    category: "Talk Show",
+    category: "Videography",
     year: "2024",
   },
   {
@@ -61,12 +61,10 @@ export const projects: Project[] = [
     title: "Follow My Recipe #1",
     artist: "OhGeesy",
     role: "Editor",
-    category: "Cooking Show",
+    category: "Videography",
     year: "2024",
   },
 ]
 
-export const categories = [
-  "All",
-  ...Array.from(new Set(projects.map((p) => p.category))),
-]
+export const categories = ["All", "Videography", "Audio", "Photography"] as const
+export type Category = (typeof categories)[number]

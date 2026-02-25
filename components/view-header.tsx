@@ -25,10 +25,13 @@ export function ViewHeader({ title, onBack }: ViewHeaderProps) {
             <span className="text-sm uppercase tracking-widest font-medium">{t.nav.back}</span>
           </button>
 
-          {/* Logo */}
-          <span className="absolute left-1/2 -translate-x-1/2 text-lg font-bold tracking-tighter text-foreground">
+          {/* Logo — acts as back button */}
+          <button
+            onClick={onBack}
+            className="absolute left-1/2 -translate-x-1/2 text-lg font-bold tracking-tighter text-foreground hover:text-primary transition-colors duration-300 cursor-pointer"
+          >
             CATANA MEDIA
-          </span>
+          </button>
 
           {/* Language switcher + Theme toggle */}
           <div className="flex items-center gap-3">

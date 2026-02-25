@@ -251,19 +251,27 @@ export function PortfolioGrid() {
               </Reveal>
               <Reveal direction="right" delay={0.2}>
                 <div className="flex items-center gap-2 flex-wrap">
-                  {categories.map((cat) => (
-                    <button
-                      key={cat}
-                      onClick={() => setActiveFilter(cat)}
-                      className={`px-4 py-2 text-xs uppercase tracking-widest transition-all duration-300 ${
-                        activeFilter === cat
-                          ? "bg-primary text-primary-foreground"
-                          : "border border-border text-muted-foreground hover:text-foreground hover:border-foreground/50"
-                      }`}
-                    >
-                      {cat === "All" ? t.portfolio.filterAll : cat}
-                    </button>
-                  ))}
+                  {categories.map((cat) => {
+                    const labelMap: Record<string, string> = {
+                      All: t.portfolio.filterAll,
+                      Videography: t.portfolio.filterVideography,
+                      Audio: t.portfolio.filterAudio,
+                      Photography: t.portfolio.filterPhotography,
+                    }
+                    return (
+                      <button
+                        key={cat}
+                        onClick={() => setActiveFilter(cat)}
+                        className={`px-4 py-2 text-xs uppercase tracking-widest transition-all duration-300 ${
+                          activeFilter === cat
+                            ? "bg-primary text-primary-foreground"
+                            : "border border-border text-muted-foreground hover:text-foreground hover:border-foreground/50"
+                        }`}
+                      >
+                        {labelMap[cat] ?? cat}
+                      </button>
+                    )
+                  })}
 
                   {/* Divider */}
                   <div className="w-px h-6 bg-border mx-1" />

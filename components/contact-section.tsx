@@ -167,11 +167,13 @@ export function ContactSection() {
                       <option value="" disabled className="bg-card text-muted-foreground">
                         {t.contact.placeholderProject}
                       </option>
-                      <option value="music-video" className="bg-card text-foreground">{t.contact.projectMusicVideo}</option>
-                      <option value="visual-album" className="bg-card text-foreground">{t.contact.projectVisualAlbum}</option>
-                      <option value="short-film" className="bg-card text-foreground">{t.contact.projectShortFilm}</option>
-                      <option value="commercial" className="bg-card text-foreground">{t.contact.projectCommercial}</option>
-                      <option value="other" className="bg-card text-foreground">{t.contact.projectOther}</option>
+                      <option value="production" className="bg-card text-foreground">{t.contact.projectProduction}</option>
+                      <option value="audio" className="bg-card text-foreground">{t.contact.projectAudio}</option>
+                      <option value="video" className="bg-card text-foreground">{t.contact.projectVideo}</option>
+                      <option value="photo" className="bg-card text-foreground">{t.contact.projectPhoto}</option>
+                      <option value="social-media" className="bg-card text-foreground">{t.contact.projectSocialMedia}</option>
+                      <option value="editing" className="bg-card text-foreground">{t.contact.projectEditing}</option>
+                      <option value="events" className="bg-card text-foreground">{t.contact.projectEvents}</option>
                     </select>
                   </div>
 

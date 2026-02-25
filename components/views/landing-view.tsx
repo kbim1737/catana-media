@@ -104,7 +104,7 @@ export function LandingView({ onNavigate }: LandingViewProps) {
         </div>
 
         {/* Top bar: Logo + Theme Toggle + Language Switcher */}
-        <div className="relative z-10 flex items-center justify-between px-6 lg:px-12 pt-6 lg:pt-8">
+        <div className="relative z-20 flex items-center justify-between px-6 lg:px-12 pt-6 lg:pt-8">
           <div
             className="flex items-center gap-0.5 lg:gap-3"
             style={{
@@ -128,14 +128,14 @@ export function LandingView({ onNavigate }: LandingViewProps) {
             </span>
           </div>
           <div
-            className="flex items-center gap-3"
+            className="flex flex-col lg:flex-row items-end lg:items-center gap-2 lg:gap-3"
             style={{
               opacity: loaded ? 1 : 0,
               transform: loaded ? "translate3d(0, 0, 0)" : "translate3d(20px, 0, 0)",
               transition: "all 0.6s ease 0.5s",
             }}
           >
-            <LanguageSwitcher />
+            <LanguageSwitcher className="text-white/70 hover:text-white" />
             <ThemeToggle />
           </div>
         </div>

@@ -61,16 +61,15 @@ export function WorkedWith({ showTitle = false }: { showTitle?: boolean }) {
         </div>
       )}
 
-      {/* Scrolling logos — 5x duplication for seamless infinite loop */}
       <div className="relative">
         <div className="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-primary to-transparent z-10 pointer-events-none" />
         <div className="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-primary to-transparent z-10 pointer-events-none" />
 
         <div
-          className="flex hover:[animation-play-state:paused]"
-          style={{ animation: "logo-scroll 12s linear infinite" }}
+          className="flex w-max hover:[animation-play-state:paused]"
+          style={{ animation: "logo-scroll 60s linear infinite" }}
         >
-          {Array.from({ length: 5 }).flatMap((_, setIndex) =>
+          {[0, 1].map((setIndex) =>
             collaborators.map((logo, i) => (
               <LogoCard key={`${setIndex}-${i}`} src={logo.src} alt={logo.alt} scale={logo.scale} />
             ))
@@ -84,7 +83,7 @@ export function WorkedWith({ showTitle = false }: { showTitle?: boolean }) {
             transform: translateX(0);
           }
           100% {
-            transform: translateX(-60%);
+            transform: translateX(-50%);
           }
         }
       `}</style>

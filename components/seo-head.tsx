@@ -29,7 +29,8 @@ export function SeoHead() {
     setMeta("property", "og:type", "website")
     setMeta("property", "og:url", "https://catana.media")
     setMeta("property", "og:site_name", "CATANA MEDIA")
-    setMeta("property", "og:locale", locale)
+    const localeRegionMap: Record<string, string> = { en: "en_US", es: "es_ES", hu: "hu_HU", ro: "ro_RO" }
+    setMeta("property", "og:locale", localeRegionMap[locale] || "en_US")
 
     // Twitter
     setMeta("name", "twitter:card", "summary_large_image")
